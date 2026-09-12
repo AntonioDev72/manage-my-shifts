@@ -7,7 +7,21 @@
   <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
+  <form id="login-form">
+    <h1>Login</h1>
 
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="button" id="register">Don't have an account?</button>
+    <button type="button" id="forgot-password">Forgot Password?</button>
+
+    <p id="error-message"></p>
+
+    <button type="submit">Login</button>
+  </form>
 
   <script src="../js/storage.js"></script>
   <script src="../js/login.js"></script>

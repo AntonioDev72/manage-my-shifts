@@ -17,12 +17,24 @@ function saveUser(user) {
 }
 
 function getCurrentUser() {
-  const userJSON = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
-  return userJSON ? JSON.parse(userJSON) : null;
+  const sessionJSON = localStorage.getItem(STORAGE_KEYS.CURRENT_USER);
+  if (!sessionJSON) return null;
+
+  const session = JSON.parse(sessionJSON);
+  if (Date.now() > session.expiresAt) {
+    clearCurrentUser();
+    return null;
+  }
+
+  return session.user;
 }
 
 function setCurrentUser(user) {
-  localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(user));
+  const session = {
+    user: user,
+    expiresAt: Date.now() + 60 * 60 * 1000,
+  };
+  localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(session));
 }
 
 
