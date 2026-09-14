@@ -7,6 +7,40 @@
   <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
+  <form id="shift-form">
+    <h1>Add Shift</h1>
+    <label for="shiftDate">Shift Date:</label>
+    <input type="date" id="shiftDate" name="shiftDate" required>
+
+    <label for="shiftTime">Shift Start Time:</label>
+    <input type="time" id="shiftTime" name="shiftTimeStart" required>
+
+    <label for="shiftEndTime">Shift End Time:</label>
+    <input type="time" id="shiftEndTime" name="shiftEndTime" required>
+
+    <label for="hourlyWage">Hourly Wage:</label>
+    <input type="number" id="hourlyWage" name="hourlyWage" step="0.01" min="0" required>
+
+    <label for="workplace">Workplace:</label>
+    <select id="workplace" name="workplace">
+      <option value="">Select a workplace</option>
+      <option value="__new__">+ Add new workplace</option>
+    </select>
+
+    <label for="slug">Shift Slug:</label>
+    <input type="text" id="slug" name="slug" required>
+
+    <label for="comments">Comments:</label>
+    <textarea id="comments" name="comments" required></textarea>
+
+    <input type="text" id="new-workplace" name="new-workplace" placeholder="Enter new workplace name" style="display: none;">
+    
+    <p id="error-message"></p>
+
+
+    <div id="progress-spinner" style="display: none;">Saving...</div>
+    <button type="submit">Save</button>
+  </form>
 
 
   <script src="../js/storage.js"></script>

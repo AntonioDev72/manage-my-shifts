@@ -51,7 +51,17 @@ function clearCurrentUser() {
 }
 
 function getShifts() {
+  const shiftsJSON = localStorage.getItem(STORAGE_KEYS.SHIFTS);
+  return shiftsJSON ? JSON.parse(shiftsJSON) : [];
 }
 
 function saveShift(shift) {
+  const shifts = getShifts();
+  shifts.push(shift);
+  localStorage.setItem(STORAGE_KEYS.SHIFTS, JSON.stringify(shifts));
+}
+
+function isSlugTaken(slug) {
+  const shifts = getShifts();
+  return shifts.some(s => s.slug === slug);
 }
