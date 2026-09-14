@@ -37,6 +37,14 @@ function setCurrentUser(user) {
   localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(session));
 }
 
+function updateUser(oldUsername, updatedUser) {
+  const users = getUsers();
+  const index = users.findIndex(u => u.username === oldUsername);
+  if (index !== -1) {
+    users[index] = updatedUser;
+    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+  }
+}
 
 function clearCurrentUser() {
   localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
