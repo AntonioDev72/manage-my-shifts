@@ -46,6 +46,16 @@ function updateUser(oldUsername, updatedUser) {
   }
 }
 
+function updateShift(oldSlug, updatedShift) {
+  const shifts = getShifts();
+  const index = shifts.findIndex(s => s.slug === oldSlug);
+  if (index !== -1) {
+    shifts[index] = updatedShift;
+    localStorage.setItem(STORAGE_KEYS.SHIFTS, JSON.stringify(shifts));
+  }
+
+}
+
 function clearCurrentUser() {
   localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
 }
@@ -63,5 +73,5 @@ function saveShift(shift) {
 
 function isSlugTaken(slug) {
   const shifts = getShifts();
-  return shifts.some(s => s.slug === slug);
+  return shifts.some(shift => shift.slug === slug);
 }

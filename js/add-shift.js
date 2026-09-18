@@ -1,10 +1,17 @@
 const currentUser = getCurrentUser();
+const params = new URLSearchParams(window.location.search);
+const slugToEdit = params.get("slug");
 
 if (!currentUser) {
   window.location.href = "index.html";
 }
 
 const shifts = getShifts();
+
+const shiftToEdit = shifts.find(function (shift){
+  return shift.slug === slugToEdit;
+});
+
 const workplaces = [...new Set(shifts.map(s => s.workplace))];
 
 const workplaceSelect = document.getElementById("workplace");
@@ -56,10 +63,11 @@ document.getElementById("shift-form").addEventListener("submit", function (event
       }
     }
 
-    if (isSlugTaken(slug)) {
+    if(isSlugTaken(slug) && (!shiftToEdit || slug !== shiftToEdit.slug)) {
       ErrorEl.textContent = "This slug is already taken. Please choose another one.";
       return;
     }
+
 
     const hoursWorked = calculateHours(startTime, endTime);
     if (hoursWorked <= 0) {
@@ -80,12 +88,27 @@ document.getElementById("shift-form").addEventListener("submit", function (event
       totalEarning,
     };
 
-    
 
     document.getElementById("progress-spinner").style.display = "block";
-
+    
     setTimeout(() => {
+      if (shiftToEdit) {
+        updateShift(shiftToEdit.slug, shift);
+        window.location.href = "home.html";
+      } else {
         saveShift(shift);
         window.location.href = "home.html";
+      }
     }, 800);
 });
+
+if(shiftToEdit) {
+  document.getElementById("page-title").textContent = "Edit Shift";
+  document.getElementById("shiftDate").value = shiftToEdit.date;
+  document.getElementById("shiftTime").value = shiftToEdit.startTime;
+  document.getElementById("shiftEndTime").value = shiftToEdit.endTime;
+  document.getElementById("hourlyWage").value = shiftToEdit.hourlyWage;
+  document.getElementById("slug").value = shiftToEdit.slug;
+  document.getElementById("comments").value = shiftToEdit.comments;
+  document.getElementById("workplace").value = shiftToEdit.workplace;
+}

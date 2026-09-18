@@ -7,7 +7,59 @@
   <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
+  <header>
+    <img src="../assets/logo.svg" alt="Manage My Shifts Logo">
+    <h1>Manage My Shifts</h1>
+    <p>Hello, <span id="welcome-message"></span>!</p>
+  </header>
 
+  <nav>
+    <ul>
+      <li><a href="add-shift.html">+ Add Shift</a></li>
+      <li><a href="edit-profile.html">Edit Profile</a></li>
+      <li><button id="logout-btn">Logout</button></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section id="search-filters">
+      <label for="search-slug">Search by shift name:</label>
+      <input type="text" id="search-slug" name="search-slug">
+
+      <label for="search-from">From date:</label>
+      <input type="date" id="search-from" name="search-from">
+
+      <label for="search-to">To date:</label>
+      <input type="date" id="search-to" name="search-to">
+
+      <button type="submit">Search</button>
+    </section>
+
+    <table id="shifts-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Hourly Wage</th>
+          <th>Workplace</th>
+          <th>Total Profit</th>
+        </tr>
+      </thead>
+      <tbody id="shifts-table-body">
+
+      </tbody>
+    </table>
+
+    <p id="highest-earning-month"></p>
+  </main>
+
+  <footer>
+    <ul>
+      <li><a href="add-shift.html">+ Add Shift</a></li>
+      <li><a href="edit-profile.html">Edit Profile</a></li>
+    </ul>
+  </footer>
 
   <script src="../js/storage.js"></script>
   <script src="../js/home.js"></script>
