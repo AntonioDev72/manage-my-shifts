@@ -35,7 +35,7 @@ function filterShifts() {
     const filteredShifts = getShifts().filter(function (shift) {
         return (fromDate === "" || shift.date >= fromDate) &&
                (toDate === "" || shift.date <= toDate) &&
-               (slug === "" || shift.slug.includes(slug));
+               (slug === "" || shift.slug.includes(slug) || shift.workplace.includes(slug));
     })
 
     renderShifts(filteredShifts);
