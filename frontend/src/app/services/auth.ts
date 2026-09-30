@@ -12,4 +12,7 @@ export class Auth {
   register(data: any) {
     return this.http.post(`${this.apiUrl}/register`, data);
   }
+  login(data: any) {
+  return this.http.post(`${this.apiUrl}/login`, data);
+  }
 }

@@ -18,6 +18,9 @@
 
   <label for="birthDate">Birth Date</label>
   <input id="birthDate" type="date" formControlName="birthDate">
+  @if (registerForm.get('birthDate')?.hasError('ageRange') && registerForm.get('birthDate')?.touched) {
+  <p>Age must be between 6 and 130 years old.</p>
+  }
 
   <button type="submit">Register</button>
 </form>
