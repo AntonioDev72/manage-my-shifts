@@ -15,4 +15,15 @@ export class Auth {
   login(data: any) {
   return this.http.post(`${this.apiUrl}/login`, data);
   }
+  saveToken(token: string) {
+  localStorage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
 }
