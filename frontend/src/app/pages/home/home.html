@@ -1,1 +1,34 @@
-<p>home works!</p>
+<app-navbar></app-navbar>
+
+<h1>Home</h1>
+
+<section>
+  <h2>Upcoming Shift</h2>
+  @if (upcomingShift) {
+    <p>{{ upcomingShift.workplace }} — {{ upcomingShift.date }} ({{ upcomingShift.startTime }} - {{ upcomingShift.endTime }})</p>
+  } @else {
+    <p>No upcoming shifts.</p>
+  }
+</section>
+
+<section>
+  <h2>This Week's Past Shifts</h2>
+  @if (thisWeekShifts.length > 0) {
+    <ul>
+      @for (shift of thisWeekShifts; track shift._id) {
+        <li>{{ shift.workplace }} — {{ shift.date }} — ${{ shift.totalEarning }}</li>
+      }
+    </ul>
+  } @else {
+    <p>No shifts this week yet.</p>
+  }
+</section>
+
+<section>
+  <h2>Highest-Earning Month</h2>
+  @if (highestEarningMonth) {
+    <p>{{ highestEarningMonth.month }} — ${{ highestEarningMonth.total }}</p>
+  } @else {
+    <p>Not enough data yet.</p>
+  }
+</section>

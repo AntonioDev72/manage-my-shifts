@@ -29,6 +29,7 @@ export class Login {
       next: (response: any) => {
         this.errorMessage = '';
         this.authService.saveToken(response.token);
+        this.authService.saveUser(response.user);
         this.router.navigate(['/home']);
       },
       error: (err) => {

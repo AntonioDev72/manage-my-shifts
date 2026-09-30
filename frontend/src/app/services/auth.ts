@@ -23,7 +23,17 @@ export class Auth {
     return localStorage.getItem('token');
   }
 
+  saveUser(user: any) {
+  localStorage.setItem('user', JSON.stringify(user));
+}
+
+getUser(): any {
+  const userJSON = localStorage.getItem('user');
+  return userJSON ? JSON.parse(userJSON) : null;
+}
+
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 }
