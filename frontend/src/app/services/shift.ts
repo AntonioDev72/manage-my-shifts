@@ -12,4 +12,16 @@ export class Shift {
   getShifts() {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  getShiftBySlug(slug: string) {
+    return this.http.get<any>(`${this.apiUrl}/${slug}`);
+  }
+
+  addShift(data: any) {
+    return this.http.post(this.apiUrl, data);
+  }
+
+  updateShift(slug: string, data: any) {
+    return this.http.put(`${this.apiUrl}/${slug}`, data);
+  }
 }

@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+
+<h1>{{ isEditMode ? 'Edit Shift' : 'Add Shift' }}</h1>
+
+<form [formGroup]="shiftForm" (ngSubmit)="onSubmit()">
+  <label for="date">Shift Date</label>
+  <input id="date" type="date" formControlName="date">
+
+  <label for="startTime">Start Time</label>
+  <input id="startTime" type="time" formControlName="startTime">
+
+  <label for="endTime">End Time</label>
+  <input id="endTime" type="time" formControlName="endTime">
+
+  <label for="hourlyWage">Hourly Wage</label>
+  <input id="hourlyWage" type="number" step="0.01" min="0" formControlName="hourlyWage">
+
+  <label for="workplace">Workplace</label>
+  <select id="workplace" formControlName="workplace" (change)="onWorkplaceChange()">
+    <option value="">Select a workplace</option>
+    @for (place of workplaces; track place) {
+      <option [value]="place">{{ place }}</option>
+    }
+    <option value="__new__">+ Add new workplace</option>
+  </select>
+
+  @if (shiftForm.get('workplace')?.value === '__new__') {
+    <label for="newWorkplace">New Workplace Name</label>
+    <input id="newWorkplace" type="text" formControlName="newWorkplace" placeholder="Enter new workplace name">
+  }
+
+  <label for="slug">Shift Name (unique)</label>
+  <input id="slug" type="text" formControlName="slug">
+
+  <label for="comments">Comments</label>
+  <textarea id="comments" formControlName="comments"></textarea>
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @if (isSaving) {
+    <div class="spinner"></div>
+  }
+
+  <button type="submit" [disabled]="isSaving">Save</button>
+</form>
