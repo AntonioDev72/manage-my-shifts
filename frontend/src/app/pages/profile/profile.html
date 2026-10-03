@@ -1,0 +1,50 @@
+<app-navbar></app-navbar>
+
+<h1>Edit Profile</h1>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <label for="email">Email</label>
+  <input id="email" type="email" formControlName="email">
+  @if (profileForm.get('email')?.invalid && profileForm.get('email')?.touched) {
+    <p class="error">Please enter a valid email.</p>
+  }
+
+  <label for="password">New Password (leave blank to keep current)</label>
+  <input id="password" type="password" formControlName="password">
+  @if (profileForm.get('password')?.hasError('minlength') && profileForm.get('password')?.touched) {
+    <p class="error">Password must be at least 6 characters.</p>
+  }
+
+  <label for="confirmPassword">Confirm New Password</label>
+  <input id="confirmPassword" type="password" formControlName="confirmPassword">
+
+  <label for="firstName">First Name</label>
+  <input id="firstName" type="text" formControlName="firstName">
+  @if (profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched) {
+    <p class="error">First name must be at least 2 characters.</p>
+  }
+
+  <label for="lastName">Last Name</label>
+  <input id="lastName" type="text" formControlName="lastName">
+  @if (profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched) {
+    <p class="error">Last name must be at least 2 characters.</p>
+  }
+
+  <label for="birthDate">Birth Date</label>
+  <input id="birthDate" type="date" formControlName="birthDate">
+  @if (profileForm.get('birthDate')?.hasError('required') && profileForm.get('birthDate')?.touched) {
+    <p class="error">Birth date is required.</p>
+  }
+  @if (profileForm.get('birthDate')?.hasError('ageRange') && profileForm.get('birthDate')?.touched) {
+    <p class="error">Age must be between 6 and 130 years old.</p>
+  }
+
+  <button type="submit">Save Changes</button>
+</form>
+
+@if (successMessage) {
+  <p>{{ successMessage }}</p>
+}
+@if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
+}

@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class Auth {
   private apiUrl = 'http://localhost:3000/api/auth';
+  private usersUrl = 'http://localhost:3000/api/users';
 
   constructor(private http: HttpClient) {}
 
@@ -35,5 +36,13 @@ getUser(): any {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+  }
+
+  getProfile() {
+    return this.http.get<any>(`${this.usersUrl}/me`);
+  }
+
+  updateProfile(data: any) {
+    return this.http.put<any>(`${this.usersUrl}/me`, data);
   }
 }
