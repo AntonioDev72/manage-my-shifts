@@ -2,8 +2,18 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const authMiddleware = require("../middleware/auth");
+const { adminMiddleware } = require("../middleware/auth");
 
 const router = express.Router();
+
+router.get("/", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const workers = await User.find({ role: { $ne: "admin" } }).select("-password");
+    res.status(200).json(workers);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
 
 router.get("/me", authMiddleware, async (req, res) => {
   try {

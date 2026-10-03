@@ -45,4 +45,8 @@ getUser(): any {
   updateProfile(data: any) {
     return this.http.put<any>(`${this.usersUrl}/me`, data);
   }
+
+  getAllWorkers() {
+    return this.http.get<any[]>(this.usersUrl);
+  }
 }

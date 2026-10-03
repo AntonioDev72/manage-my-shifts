@@ -7,6 +7,7 @@ import { AddShift } from './pages/add-shift/add-shift';
 import { Profile } from './pages/profile/profile';
 import { AdminHome } from './pages/admin-home/admin-home';
 import { AllShifts } from './pages/all-shifts/all-shifts';
+import { AllWorkers } from './pages/all-workers/all-workers';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -18,4 +19,5 @@ export const routes: Routes = [
     { path: 'profile', component: Profile },
     { path: 'admin/home', component: AdminHome },
     { path: 'admin/shifts', component: AllShifts },
+    { path: 'admin/workers', component: AllWorkers },
 ];
