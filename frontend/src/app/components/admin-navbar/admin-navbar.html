@@ -1,0 +1,15 @@
+<nav>
+  <div class="logo">Manage My Shifts - Admin</div>
+
+  <div class="links">
+    <a routerLink="/admin/shifts">All Shifts</a>
+    <a routerLink="/admin/workers">All Workers</a>
+  </div>
+
+  <div class="user-info">
+    @if (user) {
+      <span>Hello, {{ user.firstName }}</span>
+    }
+    <button (click)="onLogout()">Logout</button>
+  </div>
+</nav>

@@ -1,0 +1,34 @@
+<app-admin-navbar></app-admin-navbar>
+
+<h1>Admin Home</h1>
+
+<section>
+  <h2>Worker of the Month</h2>
+  @if (workerOfMonth) {
+    <p>{{ workerOfMonth.name }} — {{ workerOfMonth.count }} shifts</p>
+  } @else {
+    <p>Not enough data yet.</p>
+  }
+</section>
+
+<section>
+  <h2>This Week's Past Shifts</h2>
+  @if (thisWeekShifts.length > 0) {
+    <ul>
+      @for (shift of thisWeekShifts; track shift._id) {
+        <li>{{ shift.worker.firstName }} {{ shift.worker.lastName }} — {{ shift.workplace }} — {{ shift.date }} — ${{ shift.totalEarning }}</li>
+      }
+    </ul>
+  } @else {
+    <p>No shifts this week yet.</p>
+  }
+</section>
+
+<section>
+  <h2>Highest-Earning Month</h2>
+  @if (highestEarningMonth) {
+    <p>{{ highestEarningMonth.month }} — ${{ highestEarningMonth.total }}</p>
+  } @else {
+    <p>Not enough data yet.</p>
+  }
+</section>

@@ -13,6 +13,10 @@ export class Shift {
     return this.http.get<any[]>(this.apiUrl);
   }
 
+  getAllShifts() {
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
+  }
+
   getShiftBySlug(slug: string) {
     return this.http.get<any>(`${this.apiUrl}/${slug}`);
   }

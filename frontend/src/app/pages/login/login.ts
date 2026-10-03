@@ -30,7 +30,12 @@ export class Login {
         this.errorMessage = '';
         this.authService.saveToken(response.token);
         this.authService.saveUser(response.user);
-        this.router.navigate(['/home']);
+
+        if (response.user.role === 'admin') {
+          this.router.navigate(['/admin/home']);
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Something went wrong';
