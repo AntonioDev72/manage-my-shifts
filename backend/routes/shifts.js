@@ -36,7 +36,11 @@ router.get("/all", authMiddleware, adminMiddleware, async (req, res) => {
 
 router.get("/:slug", authMiddleware, async (req, res) => {
   try {
-    const shift = await Shift.findOne({ worker: req.userId, slug: req.params.slug });
+    const filter = req.userRole === "admin"
+      ? { slug: req.params.slug }
+      : { worker: req.userId, slug: req.params.slug };
+
+    const shift = await Shift.findOne(filter);
 
     if (!shift) {
       return res.status(404).json({ message: "Shift not found" });
@@ -87,13 +91,17 @@ router.put("/:slug", authMiddleware, async (req, res) => {
   try {
     const { date, startTime, endTime, hourlyWage, workplace, slug, comments } = req.body;
 
-    const shiftToEdit = await Shift.findOne({ worker: req.userId, slug: req.params.slug });
+    const findFilter = req.userRole === "admin"
+      ? { slug: req.params.slug }
+      : { worker: req.userId, slug: req.params.slug };
+
+    const shiftToEdit = await Shift.findOne(findFilter);
     if (!shiftToEdit) {
       return res.status(404).json({ message: "Shift not found" });
     }
 
     if (slug !== shiftToEdit.slug) {
-      const existingShift = await Shift.findOne({ worker: req.userId, slug });
+      const existingShift = await Shift.findOne({ worker: shiftToEdit.worker, slug });
       if (existingShift) {
         return res.status(400).json({ message: "This slug is already taken. Please choose another one." });
       }

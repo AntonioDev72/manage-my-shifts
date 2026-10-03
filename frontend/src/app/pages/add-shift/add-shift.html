@@ -1,4 +1,8 @@
-<app-navbar></app-navbar>
+@if (isAdmin) {
+  <app-admin-navbar></app-admin-navbar>
+} @else {
+  <app-navbar></app-navbar>
+}
 
 <h1>{{ isEditMode ? 'Edit Shift' : 'Add Shift' }}</h1>
 

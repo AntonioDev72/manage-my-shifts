@@ -2,11 +2,13 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Navbar } from '../../components/navbar/navbar';
+import { AdminNavbar } from '../../components/admin-navbar/admin-navbar';
 import { Shift } from '../../services/shift';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-add-shift',
-  imports: [Navbar, ReactiveFormsModule],
+  imports: [Navbar, AdminNavbar, ReactiveFormsModule],
   templateUrl: './add-shift.html',
   styleUrl: './add-shift.css',
 })
@@ -17,10 +19,12 @@ export class AddShift implements OnInit {
   editingSlug: string | null = null;
   errorMessage = '';
   isSaving = false;
+  isAdmin = false;
 
   constructor(
     private fb: FormBuilder,
     private shiftService: Shift,
+    private authService: Auth,
     private route: ActivatedRoute,
     private router: Router,
     private cdr: ChangeDetectorRef
@@ -38,6 +42,7 @@ export class AddShift implements OnInit {
   }
 
   ngOnInit() {
+    this.isAdmin = this.authService.getUser()?.role === 'admin';
     this.editingSlug = this.route.snapshot.queryParamMap.get('slug');
     this.isEditMode = !!this.editingSlug;
 
@@ -52,6 +57,10 @@ export class AddShift implements OnInit {
     if (this.isEditMode && this.editingSlug) {
       this.shiftService.getShiftBySlug(this.editingSlug).subscribe({
         next: (shift) => {
+          if (!this.workplaces.includes(shift.workplace)) {
+            this.workplaces = [...this.workplaces, shift.workplace];
+          }
+
           this.shiftForm.patchValue({
             date: shift.date,
             startTime: shift.startTime,
@@ -108,7 +117,12 @@ export class AddShift implements OnInit {
     request.subscribe({
       next: () => {
         this.isSaving = false;
-        this.router.navigate(['/my-shifts']);
+        const user = this.authService.getUser();
+        if (user?.role === 'admin') {
+          this.router.navigate(['/admin/shifts']);
+        } else {
+          this.router.navigate(['/my-shifts']);
+        }
       },
       error: (err) => {
         this.isSaving = false;
