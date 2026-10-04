@@ -34,6 +34,15 @@ router.get("/all", authMiddleware, adminMiddleware, async (req, res) => {
   }
 });
 
+router.get("/worker/:id", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const shifts = await Shift.find({ worker: req.params.id });
+    res.status(200).json(shifts);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
 router.get("/:slug", authMiddleware, async (req, res) => {
   try {
     const filter = req.userRole === "admin"

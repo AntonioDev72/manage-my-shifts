@@ -1,0 +1,43 @@
+<app-admin-navbar></app-admin-navbar>
+
+<h1>Worker Shifts</h1>
+
+<form [formGroup]="filterForm">
+  <label for="workplace">Workplace</label>
+  <input id="workplace" type="text" formControlName="workplace" placeholder="Filter by workplace">
+
+  <label for="startDate">From</label>
+  <input id="startDate" type="date" formControlName="startDate">
+
+  <label for="endDate">To</label>
+  <input id="endDate" type="date" formControlName="endDate">
+</form>
+
+@if (filteredShifts.length > 0) {
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Price/Hour</th>
+        <th>Workplace</th>
+        <th>Total Profit</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (shift of filteredShifts; track shift._id) {
+        <tr>
+          <td>{{ shift.date }}</td>
+          <td>{{ shift.startTime }}</td>
+          <td>{{ shift.endTime }}</td>
+          <td>${{ shift.hourlyWage }}</td>
+          <td>{{ shift.workplace }}</td>
+          <td>${{ shift.totalEarning }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+} @else {
+  <p>No shifts found.</p>
+}

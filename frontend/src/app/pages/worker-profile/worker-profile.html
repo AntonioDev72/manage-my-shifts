@@ -1,0 +1,53 @@
+<app-admin-navbar></app-admin-navbar>
+
+<h1>Edit Worker</h1>
+
+<form [formGroup]="workerForm" (ngSubmit)="onSubmit()">
+  <label for="email">Email</label>
+  <input id="email" type="email" formControlName="email">
+  @if (workerForm.get('email')?.invalid && workerForm.get('email')?.touched) {
+    <p class="error">Please enter a valid email.</p>
+  }
+
+  <label for="password">New Password (leave blank to keep current)</label>
+  <input id="password" type="password" formControlName="password">
+  @if (workerForm.get('password')?.hasError('minlength') && workerForm.get('password')?.touched) {
+    <p class="error">Password must be at least 6 characters.</p>
+  }
+
+  <label for="confirmPassword">Confirm New Password</label>
+  <input id="confirmPassword" type="password" formControlName="confirmPassword">
+
+  <label for="firstName">First Name</label>
+  <input id="firstName" type="text" formControlName="firstName">
+  @if (workerForm.get('firstName')?.invalid && workerForm.get('firstName')?.touched) {
+    <p class="error">First name must be at least 2 characters.</p>
+  }
+
+  <label for="lastName">Last Name</label>
+  <input id="lastName" type="text" formControlName="lastName">
+  @if (workerForm.get('lastName')?.invalid && workerForm.get('lastName')?.touched) {
+    <p class="error">Last name must be at least 2 characters.</p>
+  }
+
+  <label for="birthDate">Birth Date</label>
+  <input id="birthDate" type="date" formControlName="birthDate">
+  @if (workerForm.get('birthDate')?.hasError('required') && workerForm.get('birthDate')?.touched) {
+    <p class="error">Birth date is required.</p>
+  }
+  @if (workerForm.get('birthDate')?.hasError('ageRange') && workerForm.get('birthDate')?.touched) {
+    <p class="error">Age must be between 6 and 130 years old.</p>
+  }
+
+  <button type="submit">Save Changes</button>
+</form>
+
+<button (click)="onFilterShifts()">Filter Shifts</button>
+<button (click)="onDelete()">Delete Worker</button>
+
+@if (successMessage) {
+  <p>{{ successMessage }}</p>
+}
+@if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
+}

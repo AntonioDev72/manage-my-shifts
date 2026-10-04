@@ -8,6 +8,8 @@ import { Profile } from './pages/profile/profile';
 import { AdminHome } from './pages/admin-home/admin-home';
 import { AllShifts } from './pages/all-shifts/all-shifts';
 import { AllWorkers } from './pages/all-workers/all-workers';
+import { WorkerProfile } from './pages/worker-profile/worker-profile';
+import { WorkerShifts } from './pages/worker-shifts/worker-shifts';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,4 +22,6 @@ export const routes: Routes = [
     { path: 'admin/home', component: AdminHome },
     { path: 'admin/shifts', component: AllShifts },
     { path: 'admin/workers', component: AllWorkers },
+    { path: 'admin/workers/edit', component: WorkerProfile },
+    { path: 'admin/worker-shifts', component: WorkerShifts },
 ];

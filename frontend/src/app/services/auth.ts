@@ -49,4 +49,16 @@ getUser(): any {
   getAllWorkers() {
     return this.http.get<any[]>(this.usersUrl);
   }
+
+  getWorkerById(id: string) {
+    return this.http.get<any>(`${this.usersUrl}/${id}`);
+  }
+
+  updateWorker(id: string, data: any) {
+    return this.http.put<any>(`${this.usersUrl}/${id}`, data);
+  }
+
+  deleteWorker(id: string) {
+    return this.http.delete(`${this.usersUrl}/${id}`);
+  }
 }

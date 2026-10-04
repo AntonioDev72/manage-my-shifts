@@ -17,6 +17,10 @@ export class Shift {
     return this.http.get<any[]>(`${this.apiUrl}/all`);
   }
 
+  getWorkerShifts(workerId: string) {
+    return this.http.get<any[]>(`${this.apiUrl}/worker/${workerId}`);
+  }
+
   getShiftBySlug(slug: string) {
     return this.http.get<any>(`${this.apiUrl}/${slug}`);
   }
