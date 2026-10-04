@@ -1,34 +1,53 @@
 <app-admin-navbar></app-admin-navbar>
 
-<h1>Admin Home</h1>
-
-<section>
-  <h2>Worker of the Month</h2>
-  @if (workerOfMonth) {
-    <p>{{ workerOfMonth.name }} — {{ workerOfMonth.count }} shifts</p>
-  } @else {
-    <p>Not enough data yet.</p>
-  }
-</section>
-
-<section>
-  <h2>This Week's Past Shifts</h2>
-  @if (thisWeekShifts.length > 0) {
-    <ul>
-      @for (shift of thisWeekShifts; track shift._id) {
-        <li>{{ shift.worker.firstName }} {{ shift.worker.lastName }} — {{ shift.workplace }} — {{ shift.date }} — ${{ shift.totalEarning }}</li>
+<main>
+  <div class="stats">
+    <section class="stat-card">
+      <p class="stat-label">Worker of the Month</p>
+      @if (workerOfMonth) {
+        <p class="stat-value">{{ workerOfMonth.name }}</p>
+        <p class="stat-sub">{{ workerOfMonth.count }} shifts</p>
+      } @else {
+        <p class="stat-empty">Not enough data yet.</p>
       }
-    </ul>
-  } @else {
-    <p>No shifts this week yet.</p>
-  }
-</section>
+    </section>
 
-<section>
-  <h2>Highest-Earning Month</h2>
-  @if (highestEarningMonth) {
-    <p>{{ highestEarningMonth.month }} — ${{ highestEarningMonth.total }}</p>
+    <section class="stat-card highlight">
+      <p class="stat-label">Highest-Earning Month</p>
+      @if (highestEarningMonth) {
+        <p class="stat-value">{{ highestEarningMonth.total | currency }}</p>
+        <p class="stat-sub">{{ highestEarningMonth.month + '-01' | date: 'MMMM yyyy' }}</p>
+      } @else {
+        <p class="stat-empty">Not enough data yet.</p>
+      }
+    </section>
+  </div>
+
+  <h2 class="section-title">This Week's Past Shifts</h2>
+  @if (thisWeekShifts.length > 0) {
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Worker</th>
+            <th>Workplace</th>
+            <th>Date</th>
+            <th>Total Profit</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (shift of thisWeekShifts; track shift._id) {
+            <tr>
+              <td>{{ shift.worker?.firstName }} {{ shift.worker?.lastName }}</td>
+              <td>{{ shift.workplace }}</td>
+              <td>{{ shift.date }}</td>
+              <td>{{ shift.totalEarning | currency }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   } @else {
-    <p>Not enough data yet.</p>
+    <p class="empty">No shifts this week yet.</p>
   }
-</section>
+</main>

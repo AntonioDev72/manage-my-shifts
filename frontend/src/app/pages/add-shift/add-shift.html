@@ -4,9 +4,9 @@
   <app-navbar></app-navbar>
 }
 
-<h1>{{ isEditMode ? 'Edit Shift' : 'Add Shift' }}</h1>
-
 <form [formGroup]="shiftForm" (ngSubmit)="onSubmit()">
+  <h1>{{ isEditMode ? 'Edit Shift' : 'Add Shift' }}</h1>
+
   <label for="date">Shift Date</label>
   <input id="date" type="date" formControlName="date">
 
@@ -44,7 +44,7 @@
   }
 
   @if (isSaving) {
-    <div class="spinner"></div>
+    <div id="progress-spinner">Saving...</div>
   }
 
   <button type="submit" [disabled]="isSaving">Save</button>

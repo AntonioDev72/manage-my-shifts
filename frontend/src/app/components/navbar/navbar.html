@@ -1,16 +1,16 @@
+<header>
+  <img src="logo.svg" alt="Manage My Shifts Logo">
+  <h1>Manage My Shifts</h1>
+  @if (user) {
+    <p>Hello, <span>{{ user.firstName }}</span>!</p>
+  }
+</header>
+
 <nav>
-  <div class="logo">Manage My Shifts</div>
-
-  <div class="links">
-    <a routerLink="/my-shifts">My Shifts</a>
-    <a routerLink="/add-shift">Add Shift</a>
-    <a routerLink="/profile">Edit Profile</a>
-  </div>
-
-  <div class="user-info">
-    @if (user) {
-      <span>Hello, {{ user.firstName }}</span>
-    }
-    <button (click)="onLogout()">Logout</button>
-  </div>
+  <ul>
+    <li><a routerLink="/my-shifts">My Shifts</a></li>
+    <li><a routerLink="/add-shift">+ Add Shift</a></li>
+    <li><a routerLink="/profile">Edit Profile</a></li>
+    <li><button id="logout-btn" (click)="onLogout()">Logout</button></li>
+  </ul>
 </nav>

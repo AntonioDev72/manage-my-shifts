@@ -20,6 +20,10 @@ export class Login {
     });
   }
 
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
+
   onSubmit() {
     if (this.loginForm.invalid) {
       return;

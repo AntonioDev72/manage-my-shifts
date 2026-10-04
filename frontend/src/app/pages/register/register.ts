@@ -47,6 +47,10 @@ export class Register {
     });
   }
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+
   onSubmit() {
     if (this.registerForm.invalid) {
       return;

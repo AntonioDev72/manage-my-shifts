@@ -1,28 +1,30 @@
 <app-admin-navbar></app-admin-navbar>
 
-<h1>All Workers</h1>
-
-@if (workers.length > 0) {
-  <table>
-    <thead>
-      <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Birth Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (worker of workers; track worker._id) {
-        <tr (click)="onRowClick(worker)">
-          <td>{{ worker.firstName }}</td>
-          <td>{{ worker.lastName }}</td>
-          <td>{{ worker.email }}</td>
-          <td>{{ worker.birthDate | date: 'yyyy-MM-dd' }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
-} @else {
-  <p>No workers found.</p>
-}
+<main>
+  @if (workers.length > 0) {
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Birth Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (worker of workers; track worker._id) {
+            <tr (click)="onRowClick(worker)">
+              <td>{{ worker.firstName }}</td>
+              <td>{{ worker.lastName }}</td>
+              <td>{{ worker.email }}</td>
+              <td>{{ worker.birthDate | date: 'yyyy-MM-dd' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <p class="empty">No workers found.</p>
+  }
+</main>

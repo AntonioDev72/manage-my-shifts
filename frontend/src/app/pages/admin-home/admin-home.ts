@@ -1,10 +1,11 @@
+import { DatePipe, CurrencyPipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AdminNavbar } from '../../components/admin-navbar/admin-navbar';
 import { Shift } from '../../services/shift';
 
 @Component({
   selector: 'app-admin-home',
-  imports: [AdminNavbar],
+  imports: [AdminNavbar, DatePipe, CurrencyPipe],
   templateUrl: './admin-home.html',
   styleUrl: './admin-home.css',
 })

@@ -1,15 +1,16 @@
+<header>
+  <img src="logo.svg" alt="Manage My Shifts Logo">
+  <h1>Manage My Shifts - Admin</h1>
+  @if (user) {
+    <p>Hello, <span>{{ user.firstName }}</span>!</p>
+  }
+</header>
+
 <nav>
-  <div class="logo">Manage My Shifts - Admin</div>
-
-  <div class="links">
-    <a routerLink="/admin/shifts">All Shifts</a>
-    <a routerLink="/admin/workers">All Workers</a>
-  </div>
-
-  <div class="user-info">
-    @if (user) {
-      <span>Hello, {{ user.firstName }}</span>
-    }
-    <button (click)="onLogout()">Logout</button>
-  </div>
+  <ul>
+    <li><a routerLink="/admin/home">Home</a></li>
+    <li><a routerLink="/admin/shifts">All Shifts</a></li>
+    <li><a routerLink="/admin/workers">All Workers</a></li>
+    <li><button id="logout-btn" (click)="onLogout()">Logout</button></li>
+  </ul>
 </nav>

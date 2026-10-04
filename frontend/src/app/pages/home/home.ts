@@ -1,10 +1,11 @@
+import { DatePipe, CurrencyPipe } from '@angular/common';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Navbar } from '../../components/navbar/navbar';
 import { Shift } from '../../services/shift';
 
 @Component({
   selector: 'app-home',
-  imports: [Navbar],
+  imports: [Navbar, DatePipe, CurrencyPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
