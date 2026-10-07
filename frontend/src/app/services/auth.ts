@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class Auth {
   private apiUrl = 'http://localhost:3000/api/auth';
-  private usersUrl = 'http://localhost:3000/api/users';
+  private usersUrl = 'http://localhost:3000/api/user';
 
   constructor(private http: HttpClient) {}
 
@@ -43,7 +43,7 @@ getUser(): any {
   }
 
   updateProfile(data: any) {
-    return this.http.put<any>(`${this.usersUrl}/me`, data);
+    return this.http.patch<any>(`${this.usersUrl}/me`, data);
   }
 
   getAllWorkers() {
@@ -55,7 +55,7 @@ getUser(): any {
   }
 
   updateWorker(id: string, data: any) {
-    return this.http.put<any>(`${this.usersUrl}/${id}`, data);
+    return this.http.patch<any>(`${this.usersUrl}/${id}`, data);
   }
 
   deleteWorker(id: string) {
