@@ -2,6 +2,8 @@ const express = require("express");
 const authMiddleware = require("../middleware/auth");
 const { adminMiddleware } = require("../middleware/auth");
 const {
+  createUser,
+  login,
   getAllUsers,
   getMe,
   getUserById,
@@ -11,6 +13,9 @@ const {
 } = require("../controllers/userController");
 
 const router = express.Router();
+
+router.post("/", createUser);
+router.post("/login", login);
 
 // "/me" routes must be defined before "/:id"
 router.get("/", authMiddleware, adminMiddleware, getAllUsers);

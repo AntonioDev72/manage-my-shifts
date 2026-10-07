@@ -5,16 +5,15 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class Auth {
-  private apiUrl = 'http://localhost:3000/api/auth';
   private usersUrl = 'http://localhost:3000/api/user';
 
   constructor(private http: HttpClient) {}
 
   register(data: any) {
-    return this.http.post(`${this.apiUrl}/register`, data);
+    return this.http.post(this.usersUrl, data);
   }
   login(data: any) {
-  return this.http.post(`${this.apiUrl}/login`, data);
+  return this.http.post(`${this.usersUrl}/login`, data);
   }
   saveToken(token: string) {
   localStorage.setItem('token', token);

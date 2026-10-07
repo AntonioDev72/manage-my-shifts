@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const authRoutes = require("./routes/auth");
 const shiftRoutes = require("./routes/shifts");
 const userRoutes = require("./routes/user");
 require("dotenv").config();
@@ -10,7 +9,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/auth", authRoutes);
 app.use("/api/shifts", shiftRoutes);
 app.use("/api/user", userRoutes);
 

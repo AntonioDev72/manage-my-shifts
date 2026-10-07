@@ -1,5 +1,15 @@
 const jwt = require("jsonwebtoken");
 
+// Creates a JWT for a user. "role" is optional extra payload used by authMiddleware.
+function signToken({ _id, secret, expireTime, role }) {
+  return jwt.sign({ id: _id, role }, secret, { expiresIn: expireTime });
+}
+
+// Checks if a user has the admin permission
+function isAdmin(user) {
+  return !!user && user.role === "admin";
+}
+
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -20,7 +30,7 @@ function authMiddleware(req, res, next) {
 }
 
 function adminMiddleware(req, res, next) {
-  if (req.userRole !== "admin") {
+  if (!isAdmin({ role: req.userRole })) {
     return res.status(403).json({ message: "Admin access required" });
   }
   next();
@@ -28,3 +38,5 @@ function adminMiddleware(req, res, next) {
 
 module.exports = authMiddleware;
 module.exports.adminMiddleware = adminMiddleware;
+module.exports.signToken = signToken;
+module.exports.isAdmin = isAdmin;
