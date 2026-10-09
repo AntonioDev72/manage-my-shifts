@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   birthDate: { type: Date, required: true },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-  role: { type: String, enum: ["worker", "admin"], default: "worker" },
+  permission: { type: mongoose.Schema.Types.ObjectId, ref: "Permission" },
 });
 
 module.exports = mongoose.model("User", userSchema);

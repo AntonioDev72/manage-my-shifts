@@ -3,6 +3,7 @@ const User = require("../models/User");
 const { signToken } = require("../middleware/auth");
 const Shift = require("../models/Shift");
 const Comment = require("../models/Comment");
+const Permission = require("../models/Permission");
 
 // POST api/user/ (public) - createUser
 const createUser = async (req, res) => {
@@ -18,11 +19,17 @@ const createUser = async (req, res) => {
       return res.status(400).json({ message: "Email already registered" });
     }
 
+    const regularPermission = await Permission.findOne({ description: "regular_user" });
+    if (!regularPermission) {
+      return res.status(500).json({ message: "Permissions not set up. Run scripts/seedPermissions.js" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
       email,
       password: hashedPassword,
+      permission: regularPermission._id,
       firstName,
       lastName,
       birthDate,
@@ -41,10 +48,13 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("permission");
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
+
+    // Users without a permission are treated as regular users
+    const permissionName = user.permission ? user.permission.description : "regular_user";
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -53,7 +63,7 @@ const login = async (req, res) => {
 
     const token = signToken({
       _id: user._id,
-      role: user.role,
+      role: permissionName,
       secret: process.env.JWT_SECRET,
       expireTime: "60m",
     });
@@ -66,7 +76,7 @@ const login = async (req, res) => {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
-        role: user.role,
+        role: permissionName,
       },
     });
   } catch (error) {
@@ -77,7 +87,9 @@ const login = async (req, res) => {
 // GET api/user/ (admin only)
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({ role: { $ne: "admin" } }).select("-password");
+    const adminPermission = await Permission.findOne({ description: "admin" });
+    const filter = adminPermission ? { permission: { $ne: adminPermission._id } } : {};
+    const users = await User.find(filter).select("-password");
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
