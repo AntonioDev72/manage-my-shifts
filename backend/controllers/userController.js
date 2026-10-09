@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 const { signToken } = require("../middleware/auth");
 const Shift = require("../models/Shift");
+const Comment = require("../models/Comment");
 
 // POST api/user/ (public) - createUser
 const createUser = async (req, res) => {
@@ -176,6 +177,7 @@ const deleteUser = async (req, res) => {
     }
 
     await Shift.deleteMany({ worker: req.params.id });
+    await Comment.deleteMany({ userId: req.params.id });
     await User.findByIdAndDelete(req.params.id);
 
     res.status(200).json({ message: "User deleted successfully" });
