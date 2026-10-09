@@ -16,7 +16,7 @@ export class AddShift implements OnInit {
   shiftForm: FormGroup;
   workplaces: string[] = [];
   isEditMode = false;
-  editingSlug: string | null = null;
+  editingId: string | null = null;
   errorMessage = '';
   isSaving = false;
   isAdmin = false;
@@ -43,8 +43,8 @@ export class AddShift implements OnInit {
 
   ngOnInit() {
     this.isAdmin = this.authService.getUser()?.role === 'admin';
-    this.editingSlug = this.route.snapshot.queryParamMap.get('slug');
-    this.isEditMode = !!this.editingSlug;
+    this.editingId = this.route.snapshot.queryParamMap.get('id');
+    this.isEditMode = !!this.editingId;
 
     this.shiftService.getShifts().subscribe({
       next: (shifts) => {
@@ -54,8 +54,8 @@ export class AddShift implements OnInit {
       error: (err) => console.error('Error fetching shifts:', err),
     });
 
-    if (this.isEditMode && this.editingSlug) {
-      this.shiftService.getShiftBySlug(this.editingSlug).subscribe({
+    if (this.isEditMode && this.editingId) {
+      this.shiftService.getShiftById(this.editingId).subscribe({
         next: (shift) => {
           if (!this.workplaces.includes(shift.workplace)) {
             this.workplaces = [...this.workplaces, shift.workplace];
@@ -111,7 +111,7 @@ export class AddShift implements OnInit {
     this.isSaving = true;
 
     const request = this.isEditMode
-      ? this.shiftService.updateShift(this.editingSlug!, shiftData)
+      ? this.shiftService.updateShift(this.editingId!, shiftData)
       : this.shiftService.addShift(shiftData);
 
     request.subscribe({

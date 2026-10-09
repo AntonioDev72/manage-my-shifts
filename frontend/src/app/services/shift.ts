@@ -21,15 +21,19 @@ export class Shift {
     return this.http.get<any[]>(`${this.apiUrl}/worker/${workerId}`);
   }
 
-  getShiftBySlug(slug: string) {
-    return this.http.get<any>(`${this.apiUrl}/${slug}`);
+  getShiftById(id: string) {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
   addShift(data: any) {
     return this.http.post(this.apiUrl, data);
   }
 
-  updateShift(slug: string, data: any) {
-    return this.http.put(`${this.apiUrl}/${slug}`, data);
+  updateShift(id: string, data: any) {
+    return this.http.patch(`${this.apiUrl}/${id}`, data);
+  }
+
+  deleteShift(id: string) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

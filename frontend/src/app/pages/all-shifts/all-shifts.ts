@@ -60,6 +60,6 @@ export class AllShifts implements OnInit {
   }
 
   onRowClick(shift: any) {
-    this.router.navigate(['/add-shift'], { queryParams: { slug: shift.slug } });
+    this.router.navigate(['/add-shift'], { queryParams: { id: shift._id } });
   }
 }

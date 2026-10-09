@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const shiftRoutes = require("./routes/shifts");
+const shiftRoutes = require("./routes/shift");
 const userRoutes = require("./routes/user");
 require("dotenv").config();
 
